@@ -1,0 +1,37 @@
+<section>
+    <% posts.forEach((post, index) => { %>
+        <article class="mb-4 border p-3 rounded">
+            <h2><%= post.title %></h2>
+            <p><%= post.content %></p>
+            <p><strong>Likes:</strong> <%= post.likes %></p>
+            <form action="/like" method="POST">
+                <input type="hidden" name="index" value="<%= index %>">
+                <button class="btn btn-primary" type="submit">Like</button>
+            </form>
+
+            <!-- Comments Section -->
+            <h5>Comments:</h5>
+            <ul>
+                <% post.comments.forEach(comment => { %>
+                    <li><%= comment %></li>
+                <% }) %>
+            </ul>
+            <form action="/comment" method="POST" class="form-inline">
+                <input type="hidden" name="index" value="<%= index %>">
+                <input class="form-control" type="text" name="comment" placeholder="Add a comment" required>
+                <button class="btn btn-secondary ml-2" type="submit">Comment</button>
+            </form>
+        </article>
+    <% }) %>
+</section>
+
+<!-- Pagination Links -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                <a class="page-link" href="/?page=<%= i %>"><%= i %></a>
+            </li>
+        <% } %>
+    </ul>
+</nav>
